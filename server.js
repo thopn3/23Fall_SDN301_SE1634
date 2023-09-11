@@ -1,29 +1,47 @@
-const express = require("express")
+import express from "express"
+import * as dotenv from 'dotenv'
+import {userRouter, productRouter} from './routes/index.js'
 
-const app = express();
+// import { connect } from "mongoose"
+// import Product from "./models/productModel.js"
+
+dotenv.config()
+const app = express()
 
 // Routes: GET, POST, PUT (PATCH), DELETE
-app.get("/", (req, res) => {
-    res.status(200).json({message: 'HelloWorld'})
+app.get('/', (req, res)=>{
+    res.send("Welcome to Home RESTful API")
 })
 
-app.get("/products", (req, res)=>{
-    try {
-        const data = [
-            {id: 1, name: "Tom", age: 20},
-            {id: 2, name: "Mary", age: 19}
-        ]
-        res.status(200).json(data)
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
+app.use('/users', userRouter)
+app.use('/products', productRouter)
+
+const port = process.env.PORT || 8080
+
+app.listen(port, ()=>{
+    console.log(`Server is running on port ${port}`);
 })
 
-app.get("/blogs", (req, res)=>{
-    res.send("Welcome to Blog") 
-})
+// app.post("/products", async (req, res)=>{
+//     try {
+//         const product = await  Product.create(req.body)
+//         if(!product){
+//             res.status(500).json({message: 'Cannot create product'})
+//         }
+//         res.status(200).json(product)
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+// })
 
-// Listen on port number: 9999
-app.listen(9999, ()=>{
-    console.log('Server is running on port 9999');
-})
+// Connect to MongoDB
+// connect("mongodb+srv://admin:123456Admin@apitraining.cwlsp4i.mongodb.net/?retryWrites=true&w=majority")
+//     .then(()=>{
+//         console.log("Connect to MongoDB sucessfully")
+//         // Listen on port number: 9999
+//         app.listen(9999, ()=>{
+//             console.log('Server is running on port 9999')
+//         })
+//     }).catch((err)=>{
+//         console.log(err.message);
+//     })
