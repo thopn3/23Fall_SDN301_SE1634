@@ -1,5 +1,6 @@
 import express from 'express'
 import { body, validationResult } from 'express-validator'
+import { userController } from '../controllers/index.js'
 
 const userRouter = express.Router()
 
@@ -16,17 +17,12 @@ userRouter.post('/register', async (req, res) => {
 })
 
 userRouter.post('/login',
-    body("email").isEmail(),
-    body("password").isLength({min:5})
-    , async (req, res) => {
-        const errors = validationResult(req)
-        if(!errors.isEmpty()){
-            return res.status(400).json({errors: errors.array()})
-        }
-        res.send('Login successfully')
-    })
+    body("email").isEmail().withMessage('Email invalid format.'),
+    body("password").isLength({min:5}).withMessage('Password length greater than 5'),
+    userController.login
+    )
 
-    
+
 userRouter.put('/edit', async (req, res) => {
     res.send("Edit an User")
 })
