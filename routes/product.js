@@ -1,11 +1,10 @@
 import express from 'express'
-import productController from '../controllers/productController.js'
 
 const productRouter = express.Router()
 
 // Activities -> User object
 productRouter.get('/', (req, res)=>{
-    productController.getAllProducts(req, res)
+    res.send("Get all products")
 })
 
 productRouter.get('/:id', async(req, res)=>{

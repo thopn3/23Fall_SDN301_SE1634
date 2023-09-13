@@ -7,6 +7,7 @@ import {userRouter, productRouter} from './routes/index.js'
 
 dotenv.config()
 const app = express()
+app.use(express.json()) // Config cho express lam viec voi du lieu theo dinh dang json
 
 // Routes: GET, POST, PUT (PATCH), DELETE
 app.get('/', (req, res)=>{
