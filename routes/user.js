@@ -12,9 +12,11 @@ userRouter.get('/:id', async (req, res) => {
     res.send("Get users by user Id")
 })
 
-userRouter.post('/register', async (req, res) => {
-    res.send("Registratin a new User")
-})
+userRouter.post('/register', 
+    body("email").isEmail().withMessage('Email invalid format.'),
+    body("password").isLength({min:8}).withMessage('Password length greater than 8'),
+    userController.register
+)
 
 userRouter.post('/login',
     body("email").isEmail().withMessage('Email invalid format.'),
