@@ -1,18 +1,10 @@
 import express from 'express'
+import {productController} from '../controllers/index.js'
 
 const productRouter = express.Router()
 
-// Activities -> User object
-productRouter.get('/', (req, res)=>{
-    res.send("Get all products")
-})
+productRouter.get('/', productController.getAllProducts)
 
-productRouter.get('/:id', async(req, res)=>{
-    res.send("Get product by Id")
-})
-
-productRouter.post('/create', async(req, res)=>{
-    res.send("Create a new Product")
-})
+productRouter.post('/', productController.createProduct)
 
 export default productRouter
