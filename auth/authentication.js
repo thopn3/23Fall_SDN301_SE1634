@@ -3,23 +3,21 @@ import jwt from 'jsonwebtoken'
 const listByPassURL = [
     '/users/login',
     '/users/register'
-    // ....
 ]
 
 function checkExistURL(url){
-    listByPassURL.forEach(u => {
-        if(u.toLowerCase().trim() == url.toLowerCase().trim()){
-            return true;
-        }
-    })
+    const result = listByPassURL.find(u => u.toLocaleLowerCase().trim() == url.toLowerCase().trim())
+    if(result)
+        return true
+    else
+        return false
 }
 
 const checkToken = (req, res, next) => {
     // Xác định những request đi qua không cần kiểm tra
     // Bypass: login, register, ....
     // debugger
-    if(req.url.toLowerCase().trim() == '/users/login'.toLowerCase().trim() || 
-       req.url.toLowerCase().trim() == '/users/register'.toLowerCase().trim()){
+    if(checkExistURL(req.url)){
         // Chuyển tiếp
         next()
         // Kết thúc quá trình kiểm tra
