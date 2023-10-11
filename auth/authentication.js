@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken'
 
 const listByPassURL = [
     '/users/login',
-    '/users/register'
+    '/users/register',
+    // ....
 ]
 
 function checkExistURL(url){
